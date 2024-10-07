@@ -1,15 +1,16 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { doLogout } from "../../hooks/auth";
+import { doLogout } from "../../hooks/auth/authUtils";
 
 const Navbar = () => {
   const navigate = useNavigate(); // Get the navigate function
-  const handleClick = async () => {
+  const logoutt = async () => {
     try {
       const response = await axios.get("http://localhost:8080/court/logoff");
       if (response.status === 200) {
         console.log("Logut successful:", response.data);
+        setIsLoggedIn(false);
         doLogout();
         navigate("/");
       }
@@ -17,6 +18,13 @@ const Navbar = () => {
       console.log(error.message);
     }
   };
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    if (sessionStorage.getItem("isLoggedIn") == "true") {
+      setIsLoggedIn(true);
+      console.log("ddd");
+    }
+  }, []);
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light"
@@ -82,16 +90,19 @@ const Navbar = () => {
                 Signup
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" to="#" onClick={handleClick}>
-                Logout
-              </a>
-            </li>
+            {isLoggedIn ? (
+              <li className="nav-item">
+                <a className="nav-link" to="#" onClick={logoutt}>
+                  Logout
+                </a>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">
+                  Login
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

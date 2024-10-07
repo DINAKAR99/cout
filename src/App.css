@@ -36,6 +36,7 @@
 }
 
 .nav-item.dropdown:hover .dropdown-menu {
+  margin-top: 1px;
   display: block; /* Show dropdown on hover */
   opacity: 1; /* Make it visible */
   transition: opacity 0.2s ease; /* Ensure transition effect */
@@ -61,45 +62,8 @@ table {
   animation: slideLeft 1.2s;
 }
 
-.flip-card {
-  background-color: transparent;
-  width: 400px;
-  height: 400px;
-  perspective: 1000px;
-}
-
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
-
-.flip-card.flipped .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-.flip-card-front,
-.flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.flip-card-front {
-  color: black;
-}
-
-.flip-card-back {
-  background-color: #062e488c;
-  color: white;
-  transform: rotateY(180deg);
-}
+ 
+ 
 
 .challcont {
   height: 100%;
@@ -199,7 +163,7 @@ table {
 /* For Internet Explorer and Edge */
 * {
   scrollbar-width: thin; /* "auto" or "thin" */
-  scrollbar-color: #d6a165eb #f1f1f1; /* scrollbar handle color, scrollbar track color */
+  scrollbar-color: #989898eb #f1f1f1; /* scrollbar handle color, scrollbar track color */
 }
 
 .xtra:hover {

@@ -6,7 +6,7 @@ import * as z from "zod";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { publicAxios } from "../../authorization/Interceptor/axiosInstance";
-import { doLogin } from "../../hooks/auth";
+import { doLogin } from "../../hooks/auth/authUtils";
 
 const checkUserExists = async (name) => {
   try {
@@ -39,9 +39,12 @@ const Login = () => {
         async (name) => {
           try {
             const response = await publicAxios.get(`api/${name}`);
-            if (!response.ok) {
+            if (!response.status == 200) {
+              console.log("false" + response.status);
+
               return false; // User not found
             }
+            console.log("true");
             return true; // User exists
           } catch (error) {
             // Log the error for debugging purposes (optional)
@@ -159,7 +162,13 @@ const Login = () => {
   useEffect(() => {
     drawCaptcha();
   }, [captcha]);
-
+  useEffect(() => {
+    // Find all elements with the class 'isvalid' and remove the class
+    const elements = document.querySelectorAll(".is-valid");
+    elements.forEach((element) => {
+      element.classList.remove("is-valid");
+    });
+  }, []); // Empty dependency array ensures this runs only once after the initial render
   const handleReloadCaptcha = () => {
     setCaptcha(generateCaptcha());
   };
@@ -175,19 +184,21 @@ const Login = () => {
       if (response.status === 200) {
         console.log("Login successful:", response.data.token);
         doLogin(response);
+        console.log("ddd");
+
         navigate("/protected"); // Handle successful login, e.g., redirect or store token
       }
     } catch (error) {
       if (error.response) {
         if (error.response.status === 401) {
           console.error("Incorrect login attempt:", error.response.data);
-          setMessage("Incorrect login attempt.");
+          setMessage(error.response.data.message);
           // Handle incorrect login, show a message to the user
         } else if (error.response.status === 423) {
-          console.error("Account locked:", error.response.data);
-          setMessage("Your account is locked.");
+          console.error("Account locked:", error.response.data.message);
+          setMessage(error.response.data.message);
         } else if (error.response.status === 409) {
-          console.error("DUAL locked:", error.response.data);
+          console.error("DUAL locked:", error.response.data.message);
           navigate("/dualogin");
         } else {
           setMessage("Unexpected error occurred.");
@@ -203,12 +214,12 @@ const Login = () => {
       <div
         className="mb-5"
         style={{
-          maxWidth: "400px",
+          maxWidth: "450px",
           margin: "auto",
           padding: "2rem",
           backgroundColor: "white",
           borderRadius: "8px",
-          boxShadow: "0 0 20px rgba(0, 0, 0, 0.5)",
+          boxShadow: "0 0 20px rgba(0, 0, 0, 0.3)",
           marginTop: "15px",
         }}
       >
@@ -225,7 +236,9 @@ const Login = () => {
             </label>
             <input
               type="text"
-              className={`form-control ${errors.user ? "is-invalid" : ""}`}
+              className={`form-control ${
+                errors.user ? "is-invalid" : "is-valid"
+              }`}
               id="user"
               {...register("user")}
             />
@@ -239,7 +252,9 @@ const Login = () => {
             </label>
             <input
               type="password"
-              className={`form-control ${errors.password ? "is-invalid" : ""}`}
+              className={`form-control ${
+                errors.password ? "is-invalid" : "is-valid"
+              }`}
               id="password"
               {...register("password")}
             />
@@ -274,7 +289,9 @@ const Login = () => {
             <div className="d-flex align-items-center mt-3">
               <input
                 type="text"
-                className={`form-control ${errors.captcha ? "is-invalid" : ""}`}
+                className={`form-control ${
+                  errors.captcha ? "is-invalid" : "is-valid"
+                }`}
                 id="captcha"
                 {...register("captcha")}
               />

@@ -1,5 +1,4 @@
-import { toast } from "react-hot-toast";
-import { doLogout } from ".";
+import toast from "react-hot-toast";
 import { decrypt, encrypt } from "../crypto/EncrDecr";
 
 export const isLoggedIn = () => {
@@ -8,15 +7,18 @@ export const isLoggedIn = () => {
 };
 // ----------------------------------------------------------------
 export const doLogin = (response) => {
-  if (response.statusCode === 200) {
-    const encryptedUserData = encrypt(JSON.stringify(response.data));
+  if (response.status === 200) {
+    const encryptedUserData = encrypt(JSON.stringify(response.data.token));
     sessionStorage.setItem("authToken", encryptedUserData);
-    sessionStorage.setItem("dataWithoutEncpt", JSON.stringify(response.data)); // remove this line after completion
+    sessionStorage.setItem(
+      "dataWithoutEncpt",
+      JSON.stringify(response.data.token)
+    );
+    sessionStorage.setItem("isLoggedIn", true);
   }
-  // next();
 };
 export const doLogout = () => {
-  sessionStorage.removeItem("authToken");
+  sessionStorage.clear();
   console.log("data removed from session");
 };
 export const doUpdate = (data) => {
