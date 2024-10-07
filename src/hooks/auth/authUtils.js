@@ -1,0 +1,57 @@
+import { toast } from "react-hot-toast";
+import { doLogout } from ".";
+import { decrypt, encrypt } from "../crypto/EncrDecr";
+
+export const isLoggedIn = () => {
+  const data = sessionStorage.getItem("data");
+  return data !== null;
+};
+// ----------------------------------------------------------------
+export const doLogin = (response) => {
+  if (response.statusCode === 200) {
+    const encryptedUserData = encrypt(JSON.stringify(response.data));
+    sessionStorage.setItem("authToken", encryptedUserData);
+    sessionStorage.setItem("dataWithoutEncpt", JSON.stringify(response.data)); // remove this line after completion
+  }
+  // next();
+};
+export const doLogout = () => {
+  sessionStorage.removeItem("authToken");
+  console.log("data removed from session");
+};
+export const doUpdate = (data) => {
+  console.log("data update in session storage");
+  sessionStorage.removeItem("data");
+  const encryptedUserData = encrypt(JSON.stringify(data));
+  sessionStorage.setItem("data", encryptedUserData);
+  sessionStorage.setItem("dataWithoutEncpt", JSON.stringify(data)); // remove this line after completion
+};
+// ----------------------------------------------------------------
+
+export const getCurrentUserDetails = () => {
+  if (isLoggedIn()) {
+    return JSON.parse(decrypt(sessionStorage.getItem("data")));
+  }
+};
+
+export const getToken = () => {
+  const user = getCurrentUserDetails();
+  return user?.token;
+};
+export const getUserId = () => {
+  const user = getCurrentUserDetails();
+  return user?.userName;
+};
+
+export const handleLogoutAndRedirect = (navigate, error) => {
+  if (
+    error.response.data.status === 400 ||
+    error.response.data.status === 401 ||
+    error.response.data.status === 403
+  ) {
+    doLogout();
+    // Redirect to the home page
+    navigate("/");
+    toast.success("please login again..!!");
+  }
+};

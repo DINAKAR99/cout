@@ -5,10 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { publicAxios } from "../../authorization/Interceptor/axiosInstance";
+import { doLogin } from "../../hooks/auth";
 
 const checkUserExists = async (name) => {
   try {
-    const response = await fetch(`http://localhost:8080/court/api/${name}`);
+    const response = await publicAxios.get(`api/${name}`);
     if (!response.ok) {
       return false; // User not found
     }
@@ -36,9 +38,7 @@ const Login = () => {
       .refine(
         async (name) => {
           try {
-            const response = await fetch(
-              `http://localhost:8080/court/api/${name}`
-            );
+            const response = await publicAxios.get(`api/${name}`);
             if (!response.ok) {
               return false; // User not found
             }
@@ -166,24 +166,16 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8080/court/auth/login",
-        data, // Use URLSearchParams
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await publicAxios.post("auth/login", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (response.status === 200) {
         console.log("Login successful:", response.data.token);
-        // Example login function
-
-        localStorage.setItem("authToken", response.data.token); // Save token after authentication
-
+        doLogin(response);
         navigate("/protected"); // Handle successful login, e.g., redirect or store token
-        setMessage("Login successful!");
       }
     } catch (error) {
       if (error.response) {

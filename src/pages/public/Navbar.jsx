@@ -1,19 +1,21 @@
 import axios from "axios";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { doLogout } from "../../hooks/auth";
 
 const Navbar = () => {
   const navigate = useNavigate(); // Get the navigate function
   const handleClick = async () => {
     try {
-      localStorage.removeItem("authToken");
-      navigate("/"); // Handle successful login, e.g., redirect or store token
       const response = await axios.get("http://localhost:8080/court/logoff");
       if (response.status === 200) {
         console.log("Logut successful:", response.data);
-        navigate("/"); // Handle successful login, e.g., redirect or store token
+        doLogout();
+        navigate("/");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   return (
     <nav
