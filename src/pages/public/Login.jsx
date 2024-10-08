@@ -38,7 +38,7 @@ const Login = () => {
       .refine(
         async (name) => {
           try {
-            const response = await publicAxios.get(`api/${name}`);
+            const response = await publicAxios.get(`/public/api/${name}`);
             if (!response.status == 200) {
               console.log("false" + response.status);
 
@@ -48,7 +48,9 @@ const Login = () => {
             return true; // User exists
           } catch (error) {
             // Log the error for debugging purposes (optional)
-            console.error("Error checking user:", error.message);
+            console.log(error.response.data);
+
+            // console.error("Error checking user:", error.message);
             return false; // Consider this as a failed validation
           }
         },
@@ -175,7 +177,7 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await publicAxios.post("auth/login", data, {
+      const response = await publicAxios.post("/public/auth/login", data, {
         headers: {
           "Content-Type": "application/json",
         },

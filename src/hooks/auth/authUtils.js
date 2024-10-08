@@ -8,8 +8,10 @@ export const isLoggedIn = () => {
 // ----------------------------------------------------------------
 export const doLogin = (response) => {
   if (response.status === 200) {
-    const encryptedUserData = encrypt(JSON.stringify(response.data.token));
-    sessionStorage.setItem("authToken", encryptedUserData);
+    const encryptedUserData = encrypt(JSON.stringify(response.data));
+    const encryptedUserToken = encrypt(JSON.stringify(response.data.token));
+    sessionStorage.setItem("data", encryptedUserData);
+    sessionStorage.setItem("authToken", encryptedUserToken);
     sessionStorage.setItem(
       "dataWithoutEncpt",
       JSON.stringify(response.data.token)

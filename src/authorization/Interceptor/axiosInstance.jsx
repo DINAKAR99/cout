@@ -1,5 +1,6 @@
 // src/api/axiosInstance.js
 import axios from "axios";
+import { getToken } from "../../hooks/auth/authUtils";
 export const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const publicAxios = axios.create({
@@ -13,7 +14,7 @@ export const privateAxios = axios.create({
 //   interceptor
 privateAxios.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("authToken");
+    const token = getToken();
     if (token) {
       // Add Authorization header if token exists
       config.headers["Authorization"] = `Bearer ${token}`;
