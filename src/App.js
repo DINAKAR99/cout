@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "./pages/public/Login";
 import Signup from "./pages/public/Signup";
 import BarLoader from "react-spinners/BarLoader";
@@ -10,9 +10,12 @@ import SessionExpired from "./pages/public/SessionExpired";
 import Home from "./pages/public/Home";
 import About from "./pages/public/About";
 import ProtectedRoute from "./authorization/ProtectedRoute";
+import { LinearProgress } from "@mui/material";
 
 function App() {
   const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     setLoading(true);
@@ -25,7 +28,18 @@ function App() {
     // Cleanup function to clear the timer if the component unmounts
     return () => clearTimeout(timer);
   }, []);
+  // Use useEffect to manage loading state during navigation
+  useEffect(() => {
+    setLoading2(true);
 
+    // Simulate loading delay for better UX
+    const timer = setTimeout(() => {
+      setLoading2(false);
+    }, 800); // Adjust the delay to match the user experience
+
+    // Cleanup to prevent memory leaks
+    return () => clearTimeout(timer);
+  }, [location]); // Run the effect on route change
   return (
     <>
       {loading ? (
@@ -34,6 +48,19 @@ function App() {
         </div>
       ) : (
         <>
+          {loading2 ? (
+            <LinearProgress
+              sx={{
+                "& .MuiLinearProgress-bar": {
+                  // Progress bar color
+                  animationDuration: "3s", // Control speed by adjusting duration
+                },
+              }}
+            />
+          ) : (
+            ""
+          )}
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/b/a" element={<Signup />} />

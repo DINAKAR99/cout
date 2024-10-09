@@ -1,11 +1,24 @@
 import React from "react";
 import PublicLayout from "../../Layouts/PublicLayout";
+import { LinearProgress, Skeleton } from "@mui/material";
 
 const Home = () => {
   return (
     <div>
       <PublicLayout>
         <div className="container mt-5">
+          <Skeleton
+            animation="wave"
+            width={150}
+            height={150}
+            sx={{
+              animationDuration: "0.1s",
+              // Black background color
+              "& .MuiSkeleton-wave": {
+                backgroundColor: "rgba(255, 255, 255, 9)", // Lighter color for the wave effect
+              },
+            }}
+          />
           <h1 className="text-center mb-4">Welcome </h1>
 
           <div className="row">
