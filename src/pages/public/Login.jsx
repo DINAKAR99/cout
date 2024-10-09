@@ -5,8 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { publicAxios } from "../../authorization/Interceptor/axiosInstance";
-import { doLogin } from "../../hooks/auth/authUtils";
+import { publicAxios } from "../../authorization/Interceptor/AxiosInterceptor";
+import { doLogin } from "../../authorization/Utility/AuthorizationUtils";
 
 const checkUserExists = async (name) => {
   try {
@@ -41,16 +41,12 @@ const Login = () => {
             const response = await publicAxios.get(`/public/api/${name}`);
             if (!response.status == 200) {
               console.log("false" + response.status);
-
-              return false; // User not found
+              return false;
             }
-            console.log("true");
             return true; // User exists
           } catch (error) {
             // Log the error for debugging purposes (optional)
             console.log(error.response.data);
-
-            // console.error("Error checking user:", error.message);
             return false; // Consider this as a failed validation
           }
         },
@@ -186,8 +182,6 @@ const Login = () => {
       if (response.status === 200) {
         console.log("Login successful:", response.data.token);
         doLogin(response);
-        console.log("ddd");
-
         navigate("/protected"); // Handle successful login, e.g., redirect or store token
       }
     } catch (error) {

@@ -1,17 +1,13 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { doLogout } from "../../hooks/auth/authUtils";
-import { apiBasePath } from "../../helpers/basePathHelper";
-import publicAxios, {
-  privateAxios,
-} from "../../authorization/Interceptor/axiosInstance";
+import { privateAxios } from "../../authorization/Interceptor/AxiosInterceptor";
+import { doLogout } from "../../authorization/Utility/AuthorizationUtils";
 
 const Navbar = () => {
   const navigate = useNavigate(); // Get the navigate function
   const logoutt = async () => {
     try {
-      const response = await publicAxios.get("public/logoff");
+      const response = await privateAxios.get("/logoff");
       if (response.status === 200) {
         console.log("Logut successful:", response.data);
         setIsLoggedIn(false);
@@ -28,9 +24,6 @@ const Navbar = () => {
       const response = await privateAxios.get(`/test`);
       if (response.status === 200) {
         console.log("jwt successful:", response.data);
-        // setIsLoggedIn(true);
-        // doLogout();
-        // navigate("/");
       }
     } catch (error) {
       console.log(error.message);
@@ -40,7 +33,6 @@ const Navbar = () => {
   useEffect(() => {
     if (sessionStorage.getItem("isLoggedIn") == "true") {
       setIsLoggedIn(true);
-      console.log("ddd");
     }
   }, []);
   return (

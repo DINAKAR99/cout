@@ -2,20 +2,20 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import PublicLayout from "../../Layouts/PublicLayout";
 import axios from "axios";
+import { privateAxios } from "../../authorization/Interceptor/AxiosInterceptor";
 
 const Dualogin = () => {
   const navigate = useNavigate(); // Get the navigate function
 
   const onSubmit = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:8080/court/dualsessionlogin",
+      const response = await privateAxios.get(
+        "dualsessionlogin",
         // Your login data
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
-          withCredentials: true,
         }
       );
       if (response.status === 200) {

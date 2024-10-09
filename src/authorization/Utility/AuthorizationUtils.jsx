@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { decrypt, encrypt } from "../crypto/EncrDecr";
+import { decrypt, encrypt } from "../../hooks/crypto/EncrDecr";
 
 export const isLoggedIn = () => {
   const data = sessionStorage.getItem("data");
@@ -15,6 +15,11 @@ export const doLogin = (response) => {
     sessionStorage.setItem(
       "dataWithoutEncpt",
       JSON.stringify(response.data.token)
+    );
+    sessionStorage.setItem("userName", response.data.user);
+    sessionStorage.setItem(
+      "refreshToken",
+      response.data.refreshtoken.refreshtoken
     );
     sessionStorage.setItem("isLoggedIn", true);
   }
@@ -38,11 +43,11 @@ export const getCurrentUserDetails = () => {
   }
 };
 
-export const getToken = () => {
+export const getJwtToken = () => {
   const user = getCurrentUserDetails();
   return user?.token;
 };
-export const getUserId = () => {
+export const getUserName = () => {
   const user = getCurrentUserDetails();
   return user?.userName;
 };

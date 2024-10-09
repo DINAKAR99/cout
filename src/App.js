@@ -44,7 +44,10 @@ function App() {
               path="/protected"
               element={<ProtectedRoute element={<Protected />} />}
             />
-            <Route path="/dualogin" element={<Dualogin />} />
+            <Route
+              path="/dualogin"
+              element={<ProtectedRoute element={<Dualogin />} />}
+            />
             <Route path="/sessionExpired" element={<SessionExpired />} />
             <Route path="*" element={<Home />} />
           </Routes>

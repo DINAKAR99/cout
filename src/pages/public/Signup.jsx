@@ -4,8 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { publicAxios } from "../../authorization/Interceptor/axiosInstance";
-import { doLogin } from "../../hooks/auth/authUtils";
 import { useForm } from "react-hook-form";
 
 const Signup = () => {

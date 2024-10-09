@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getToken, getUserId } from "../auth";
+import { getJwtToken } from "../../authorization/Utility/AuthorizationUtils";
 export const API_BASE_URL = process.env.REACT_APP_API_URL;
 console.log(API_BASE_URL);
 
@@ -13,7 +13,7 @@ export const privateAxios = axios.create({
 
 privateAxios.interceptors.request.use(
   (config) => {
-    const token = getToken();
+    const token = getJwtToken();
     console.log(token);
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`; // Using Bearer schema for JWT
