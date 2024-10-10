@@ -11,6 +11,7 @@ import SessionExpired from "./pages/public/SessionExpired";
 import Home from "./pages/public/Home";
 import About from "./pages/public/About";
 import ProtectedRoute from "./pages/private/ProtectedRoute";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -48,19 +49,18 @@ function App() {
         </div>
       ) : (
         <>
-          {loading2 ? (
-            <LinearProgress
-              sx={{
-                "& .MuiLinearProgress-bar": {
-                  // Progress bar color
-                  animationDuration: "3s", // Control speed by adjusting duration
-                },
-              }}
-            />
-          ) : (
-            ""
-          )}
-
+          {loading2
+            ? // <LinearProgress
+              //   sx={{
+              //     "& .MuiLinearProgress-bar": {
+              //       // Progress bar color
+              //       animationDuration: "3s", // Control speed by adjusting duration
+              //     },
+              //   }}
+              // />
+              ""
+            : ""}
+          <Toaster />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/b/a" element={<Signup />} />

@@ -6,6 +6,7 @@ import * as z from "zod";
 import PublicLayout from "../../Layouts/PublicLayout";
 import { doLogin } from "../../utility/AuthorizationUtils";
 import { publicAxios } from "../../service/axiosInterceptor";
+import { LinearProgress } from "@mui/material";
 
 const checkUserExists = async (name) => {
   try {
@@ -24,6 +25,7 @@ const checkUserExists = async (name) => {
 const Login = () => {
   const [captcha, setCaptcha] = useState(generateCaptcha());
   const [message, setMessage] = useState("");
+  const [submitted, setSubmitted] = useState(false);
   const canvasRef = useRef(null);
   const navigate = useNavigate(); // Get the navigate function
   // Define the validation schema
@@ -171,6 +173,7 @@ const Login = () => {
   };
 
   const onSubmit = async (data) => {
+    setSubmitted(true); // Set form submission state
     try {
       const response = await publicAxios.post("/public/auth/login", data, {
         headers: {
@@ -218,7 +221,19 @@ const Login = () => {
           marginTop: "15px",
         }}
       >
-        <h2 className="text-center">Login</h2>
+        {submitted ? (
+          <LinearProgress
+            sx={{
+              "& .MuiLinearProgress-bar": {
+                // Progress bar color
+                animationDuration: "3s", // Control speed by adjusting duration
+              },
+            }}
+          />
+        ) : (
+          ""
+        )}
+        <h2 className="text-center mt-2 ">Login</h2>
         {message && (
           <div className="message-box text-center text-danger     ">
             {message}
