@@ -9,17 +9,17 @@ export const isLoggedIn = () => {
 export const doLogin = (response) => {
   if (response.status === 200) {
     const encryptedUserData = encrypt(JSON.stringify(response.data));
-    const encryptedUserToken = encrypt(JSON.stringify(response.data.token));
-    sessionStorage.setItem("data", encryptedUserData);
-    sessionStorage.setItem("authToken", encryptedUserToken);
+    const encryptedUserToken = encrypt(JSON.stringify(response.data.jwttoken));
+    sessionStorage.setItem("fulldata", encryptedUserData);
+    sessionStorage.setItem("jwttoken", encryptedUserToken);
     sessionStorage.setItem(
-      "dataWithoutEncpt",
-      JSON.stringify(response.data.token)
+      "jwtWithoutEncpt",
+      JSON.stringify(response.data.jwttoken)
     );
-    sessionStorage.setItem("userName", response.data.user);
+    sessionStorage.setItem("username", response.data.username);
     sessionStorage.setItem(
-      "refreshToken",
-      response.data.refreshtoken.refreshtoken
+      "refreshtoken",
+      response.data.refreshtoken.refreshToken
     );
     sessionStorage.setItem("isLoggedIn", true);
   }
@@ -39,17 +39,18 @@ export const doUpdate = (data) => {
 
 export const getCurrentUserDetails = () => {
   if (isLoggedIn()) {
-    return JSON.parse(decrypt(sessionStorage.getItem("data")));
+    return JSON.parse(decrypt(sessionStorage.getItem("fulldata")));
   }
 };
 
 export const getJwtToken = () => {
   const user = getCurrentUserDetails();
-  return user?.token;
+  return user?.jwttoken;
 };
+
 export const getUserName = () => {
   const user = getCurrentUserDetails();
-  return user?.userName;
+  return user?.username;
 };
 
 export const handleLogoutAndRedirect = (navigate, error) => {

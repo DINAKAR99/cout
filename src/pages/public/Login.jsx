@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import PublicLayout from "../../Layouts/PublicLayout";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import * as z from "zod";
+import PublicLayout from "../../Layouts/PublicLayout";
 import { doLogin } from "../../utility/AuthorizationUtils";
-import { publicAxios } from "../../service/axiosHelper";
+import { publicAxios } from "../../service/AxiosInterceptor";
 
 const checkUserExists = async (name) => {
   try {
@@ -180,7 +179,7 @@ const Login = () => {
       });
 
       if (response.status === 200) {
-        console.log("Login successful:", response.data.token);
+        console.log("Login successful:", response.data.jwttoken);
         doLogin(response);
         navigate("/protected"); // Handle successful login, e.g., redirect or store token
       }
