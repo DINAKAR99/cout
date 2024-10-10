@@ -1,14 +1,5 @@
-import axios from "axios";
-import { getJwtToken } from "../Utility/AuthorizationUtils";
+import { getJwtToken } from "../utility/AuthorizationUtils";
 export const API_BASE_URL = process.env.REACT_APP_API_URL;
-
-export const publicAxios = axios.create({
-  baseURL: API_BASE_URL,
-});
-
-export const privateAxios = axios.create({
-  baseURL: API_BASE_URL,
-});
 
 //   interceptor
 privateAxios.interceptors.request.use(

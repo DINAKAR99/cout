@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { privateAxios } from "../../authorization/Interceptor/AxiosInterceptor";
-import { doLogout } from "../../authorization/Utility/AuthorizationUtils";
+import { privateAxios } from "../../service/AxiosInterceptor";
+import { doLogout } from "../../utility/AuthorizationUtils";
 
 const Navbar = () => {
   const navigate = useNavigate(); // Get the navigate function

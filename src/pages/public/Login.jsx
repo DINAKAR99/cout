@@ -5,8 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { publicAxios } from "../../authorization/Interceptor/AxiosInterceptor";
-import { doLogin } from "../../authorization/Utility/AuthorizationUtils";
+import { doLogin } from "../../utility/AuthorizationUtils";
+import { publicAxios } from "../../service/axiosHelper";
 
 const checkUserExists = async (name) => {
   try {

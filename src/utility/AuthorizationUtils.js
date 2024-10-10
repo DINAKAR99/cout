@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { decrypt, encrypt } from "../../hooks/crypto/EncrDecr";
+import { decrypt, encrypt } from "./EncrDecr";
 
 export const isLoggedIn = () => {
   const data = sessionStorage.getItem("data");

@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
 import "./App.css";
+import { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { LinearProgress } from "@mui/material";
 import Login from "./pages/public/Login";
 import Signup from "./pages/public/Signup";
 import BarLoader from "react-spinners/BarLoader";
-import Protected from "./pages/public/Protected";
-import Dualogin from "./pages/public/Dualogin";
+import Protected from "./pages/private/Protected";
+import Dualogin from "./pages/private/Dualogin";
 import SessionExpired from "./pages/public/SessionExpired";
 import Home from "./pages/public/Home";
 import About from "./pages/public/About";
-import ProtectedRoute from "./authorization/ProtectedRoute";
-import { LinearProgress } from "@mui/material";
+import ProtectedRoute from "./pages/private/ProtectedRoute";
 
 function App() {
   const [loading, setLoading] = useState(false);

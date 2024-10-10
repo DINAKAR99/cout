@@ -1,9 +1,9 @@
 import axios from "axios";
-import { getJwtToken } from "../../authorization/Utility/AuthorizationUtils";
+import { getJwtToken } from "../utility/AuthorizationUtils";
 export const API_BASE_URL = process.env.REACT_APP_API_URL;
 console.log(API_BASE_URL);
 
-export const myAxios = axios.create({
+export const publicAxios = axios.create({
   baseURL: API_BASE_URL,
 });
 
