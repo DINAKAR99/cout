@@ -1,5 +1,4 @@
 import { getJwtToken } from "../utility/AuthorizationUtils";
-import { privateAxios } from "./axiosHelper";
 import axios from "axios";
 
 export const API_BASE_URL = process.env.REACT_APP_API_URL;

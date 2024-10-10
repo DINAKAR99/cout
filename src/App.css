@@ -25,6 +25,7 @@
 }
 .nav-link {
   border-radius: 5px;
+  padding-left:10px
 }
 /* Navbar.css */
 .dropdown-menu {

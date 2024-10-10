@@ -2,18 +2,19 @@ import toast from "react-hot-toast";
 import { decrypt, encrypt } from "./EncrDecr";
 
 export const isLoggedIn = () => {
-  const data = sessionStorage.getItem("data");
-  return data !== null;
+  const data = sessionStorage.getItem("isLoggedIn");
+  return data;
 };
 // ----------------------------------------------------------------
 export const doLogin = (response) => {
   if (response.status === 200) {
     const encryptedUserData = encrypt(JSON.stringify(response.data));
     const encryptedUserToken = encrypt(JSON.stringify(response.data.jwttoken));
+
     sessionStorage.setItem("fulldata", encryptedUserData);
     sessionStorage.setItem("jwttoken", encryptedUserToken);
     sessionStorage.setItem(
-      "jwtWithoutEncpt",
+      "rawJwtToken",
       JSON.stringify(response.data.jwttoken)
     );
     sessionStorage.setItem("username", response.data.username);
@@ -30,15 +31,16 @@ export const doLogout = () => {
 };
 export const doUpdate = (data) => {
   console.log("data update in session storage");
-  sessionStorage.removeItem("data");
+  sessionStorage.removeItem("fulldata");
   const encryptedUserData = encrypt(JSON.stringify(data));
-  sessionStorage.setItem("data", encryptedUserData);
+  sessionStorage.setItem("fulldata", encryptedUserData);
   sessionStorage.setItem("dataWithoutEncpt", JSON.stringify(data)); // remove this line after completion
 };
 // ----------------------------------------------------------------
 
 export const getCurrentUserDetails = () => {
   if (isLoggedIn()) {
+    console.log(JSON.parse(decrypt(sessionStorage.getItem("fulldata"))));
     return JSON.parse(decrypt(sessionStorage.getItem("fulldata")));
   }
 };

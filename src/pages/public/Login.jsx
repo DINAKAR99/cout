@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import * as z from "zod";
 import PublicLayout from "../../Layouts/PublicLayout";
 import { doLogin } from "../../utility/AuthorizationUtils";
-import { publicAxios } from "../../service/AxiosInterceptor";
+import { publicAxios } from "../../service/axiosInterceptor";
 
 const checkUserExists = async (name) => {
   try {
