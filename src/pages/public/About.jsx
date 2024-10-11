@@ -1,10 +1,19 @@
 import React from "react";
 import PublicLayout from "../../Layouts/PublicLayout";
+import { Breadcrumbs, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
     <PublicLayout>
       <div className="container mt-5">
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" to={"/"}>
+            Home
+          </Link>
+          <Typography sx={{ color: "text.primary" }}>About</Typography>
+        </Breadcrumbs>
+
         <h1 className="text-center mb-4">About Us</h1>
         <div
           className="p-4 mb-5 rounded shadow"

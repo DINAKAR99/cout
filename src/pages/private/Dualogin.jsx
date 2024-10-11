@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import PublicLayout from "../../Layouts/PublicLayout";
 import axios from "axios";
-import { privateAxios } from "../../service/axiosInterceptor";
+import privateAxios from "../../service/Interceptor";
 
 const Dualogin = () => {
   const navigate = useNavigate(); // Get the navigate function

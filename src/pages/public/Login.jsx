@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import * as z from "zod";
 import PublicLayout from "../../Layouts/PublicLayout";
 import { doLogin } from "../../utility/AuthorizationUtils";
-import { publicAxios } from "../../service/axiosInterceptor";
-import { LinearProgress } from "@mui/material";
+import { Button, LinearProgress, TextField } from "@mui/material";
+import { publicAxios } from "../../service/Interceptor";
 
 const checkUserExists = async (name) => {
   try {
@@ -182,11 +182,14 @@ const Login = () => {
       });
 
       if (response.status === 200) {
+        setSubmitted(false);
         console.log("Login successful:", response.data.jwttoken);
         doLogin(response);
         navigate("/protected"); // Handle successful login, e.g., redirect or store token
       }
     } catch (error) {
+      setSubmitted(false);
+
       if (error.response) {
         if (error.response.status === 401) {
           console.error("Incorrect login attempt:", error.response.data);
@@ -310,9 +313,9 @@ const Login = () => {
               <p className="text-danger">{errors.captcha.message}</p>
             )}
           </div>
-          <button type="submit" className="btn btn-primary w-100 mt-3">
+          <Button type="submit" variant="contained" className=" w-100 mt-3">
             Login
-          </button>
+          </Button>
         </form>
         <div className="text-center mt-3">
           <a href="#">Forgot your password?</a>

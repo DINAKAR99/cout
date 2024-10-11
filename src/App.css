@@ -8,7 +8,9 @@
     opacity: 1;
   }
 }
-.App{
+/* styles.css */
+
+.App {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,7 +27,7 @@
 }
 .nav-link {
   border-radius: 5px;
-  padding-left:10px
+  padding-left: 10px;
 }
 /* Navbar.css */
 .dropdown-menu {
@@ -62,9 +64,6 @@ table {
   background-color: #696969d5;
   animation: slideLeft 1.2s;
 }
-
- 
- 
 
 .challcont {
   height: 100%;

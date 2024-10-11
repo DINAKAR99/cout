@@ -41,6 +41,7 @@ function App() {
     // Cleanup to prevent memory leaks
     return () => clearTimeout(timer);
   }, [location]); // Run the effect on route change
+
   return (
     <>
       {loading ? (
@@ -49,17 +50,19 @@ function App() {
         </div>
       ) : (
         <>
-          {loading2
-            ? // <LinearProgress
-              //   sx={{
-              //     "& .MuiLinearProgress-bar": {
-              //       // Progress bar color
-              //       animationDuration: "3s", // Control speed by adjusting duration
-              //     },
-              //   }}
-              // />
-              ""
-            : ""}
+          {loading2 ? (
+            <LinearProgress
+              sx={{
+                "& .MuiLinearProgress-bar": {
+                  // Progress bar color
+                  animationDuration: "3s", // Control speed by adjusting duration
+                },
+              }}
+            />
+          ) : (
+            ""
+          )}
+
           <Toaster />
           <Routes>
             <Route path="/" element={<Home />} />
